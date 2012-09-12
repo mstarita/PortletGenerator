@@ -198,5 +198,5 @@ def showUsage() {
 	println "\t[-viewutil-package=<package of the view util classes>] - default: thecat.common.view.util"
 	println "\t[-verbose] verbose output"
 	println "\t[-tpl-config=<template config dir starting from thecat.tools.portlet.resources.tpl.*...] template configuration - default: icefaces1_8"
-	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin"
+	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin, richfaces4"
 }
