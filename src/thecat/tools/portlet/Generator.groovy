@@ -77,7 +77,27 @@ def files4config =
 				 'lib':    [inputDir: 'lib', outputDir: 'web/lib', postfix: '', 
 					 		files: []],
 				 'projlib':[inputDir: 'projlib', outputDir: 'projlib', postfix: '', 
-					 		files: ['portlet.jar', 'servlet-api.jar']]]
+					 		files: ['portlet.jar', 'servlet-api.jar']]],
+			'liferay_jsp' :
+						 ['webcfg': [inputDir: 'tpl/webcfg', outputDir: 'web/WEB-INF', postfix: '.tpl',
+									 files: ['web.xml', 'portlet.xml',
+											 'liferay-portlet.xml', 'liferay-hook.xml', 'liferay-display.xml']],
+						  'i18n':   [inputDir: 'tpl/i18n', outputDir: 'src/resources', postfix: '.tpl',
+									 files: ['Language_it_IT.properties', 'Language_en_US.properties']],
+						  'src':    [inputDir: 'tpl/src', outputDir: "src/${binding.packageName.replaceAll('[.]', '/')}", postfix: '.tpl',
+									 files: ['${portletName}Portlet.java',
+											 'Edit${portletName}ModelBean.java']],
+						  'jsp':    [inputDir: 'tpl/jsp', outputDir: "web/${binding.portletName}", postfix: '.tpl',
+						             files: ['init.jsp', 'edit.jsp', 'view.jsp']],
+						  'css':    [inputDir: 'css', outputDir: 'web/css', postfix: '',
+						             files: ['form.css']],
+						  'lib':    [inputDir: 'lib', outputDir: 'web/lib', postfix: '',
+									  files: []],
+						  'tld':    [inputDir: 'tld', outputDir: 'web/WEB-INF/tld', postfix: '',
+									  files: ['c.tld', 'liferay-aui.tld', 'liferay-portlet.tld', 'liferay-security.tld', 
+										  		'liferay-theme.tld', 'liferay-ui.tld', 'liferay-util.tld']],
+						  'projlib':[inputDir: 'projlib', outputDir: 'projlib', postfix: '',
+									  files: ['portal-service.jar', 'portlet.jar', 'servlet-api.jar', 'util-bridges.jar', 'util-taglib.jar']]]
 			]
 
 showRunInfo outputPackage, viewUtilPackage, tplConfigDir
@@ -198,5 +218,5 @@ def showUsage() {
 	println "\t[-viewutil-package=<package of the view util classes>] - default: thecat.common.view.util"
 	println "\t[-verbose] verbose output"
 	println "\t[-tpl-config=<template config dir starting from thecat.tools.portlet.resources.tpl.*...] template configuration - default: icefaces1_8"
-	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin, richfaces4"
+	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin, richfaces4, liferay_jsp"
 }
