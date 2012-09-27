@@ -105,7 +105,7 @@ public class Edit${portletName}Layout extends VerticalLayout implements ValueCha
 		resourceBundleProperty.getResourceBundleProp().addListener(this);
 	}
 
-	public void setModelBean(EditSimpleSampleModelBean modelBean) {
+	public void setModelBean(Edit${portletName}ModelBean modelBean) {
 		this.modelBean = modelBean;
 	}
 	

@@ -19,15 +19,21 @@ public class Edit${portletName}ModelBean implements Serializable {
 	private String param2;
 	private String param3;
 	
-	public Edit${portletName}ModelBean(PortletRequest portletRequest) {
-		PortletPreferences portletPrefs = portletRequest.getPreferences();
+	public Edit${portletName}ModelBean(PortletPreferences portletPrefs) {
 		
+		init(portletPrefs);
+		
+	}
+
+	public void init(PortletPreferences portletPrefs) {
+
 		showParams = new Boolean(portletPrefs.getValue(PREFS_SHOW_PARAMS, "false"));
 		param1 = portletPrefs.getValue(PREFS_PARAM1, "p1");
 		param2 = portletPrefs.getValue(PREFS_PARAM2, "p2");
 		param3 = portletPrefs.getValue(PREFS_PARAM3, "p3");
+		
 	}
-
+	
 	public void setShowParams(Boolean showParams) {
 		this.showParams = showParams;
 	}

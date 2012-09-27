@@ -10,22 +10,28 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
-public class SimpleSamplePortlet extends MVCPortlet {
+public class ${portletName}Portlet extends MVCPortlet implements Edit${portletName}ActionBean, View${portletName}ActionBean {
 	
+	public static final String VIEW_MODEL_BEAN_ATTR_KEY = "viewModelBean";
 	public static final String EDIT_MODEL_BEAN_ATTR_KEY = "editModelBean";
 
 	public static final String INFO_MESSAGE_ATTR_KEY = "infoMessage";
 	public static final String ERROR_MESSAGE_ATTR_KEY = "errorMessage";
 	
+	private View${portletName}ModelBean viewModelBean = null;
+	private View${portletName}ActionBean viewActionBean = null;
+	
 	private Edit${portletName}ModelBean editModelBean = null;
+	private Edit${portletName}ActionBean editActionBean = null;
 	
 	@Override
 	public void doView(RenderRequest request, RenderResponse response) throws IOException, PortletException {
 		
-		if (editModelBean == null) {
+		if (viewModelBean == null) {
 			init(request);
 		}
 		
+		request.setAttribute(VIEW_MODEL_BEAN_ATTR_KEY, viewModelBean);
 		request.setAttribute(EDIT_MODEL_BEAN_ATTR_KEY, editModelBean);
 		
 		super.doView(request, response);
@@ -35,7 +41,7 @@ public class SimpleSamplePortlet extends MVCPortlet {
 	@Override
 	public void doEdit(RenderRequest request, RenderResponse response) throws IOException, PortletException {
 		
-		if (editModelBean == null) {
+		if (viewModelBean == null) {
 			init(request);
 		}
 		
@@ -47,73 +53,43 @@ public class SimpleSamplePortlet extends MVCPortlet {
 
 	private void init(RenderRequest request) {
 		
-		System.out.println("init editModelBean...");
+		System.out.println("init ${portletName}Portlet...");
 		
-		editModelBean = new Edit${portletName}ModelBean(request);
+		viewModelBean = new View${portletName}ModelBean();
+		viewActionBean = new View${portletName}ActionBeanImpl(viewModelBean);
+		
+		editModelBean = new Edit${portletName}ModelBean(request.getPreferences());
+		editActionBean = new Edit${portletName}ActionBeanImpl(editModelBean);
 		
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	// View Action - start
+	@Override
 	public void simpleAction(ActionRequest actionRequest, ActionResponse actionResponse) {
 		
-		System.out.println("simpleAction fired!!!");
+		viewActionBean.simpleAction(actionRequest, actionResponse);
 		
 	}
-
+	// View Action - end
+	///////////////////////////////////////////////////////////////////////////
+	
+	///////////////////////////////////////////////////////////////////////////
+	// Edit Action - start
+	@Override
 	public void saveAction(ActionRequest actionRequest, ActionResponse actionResponse) {
 		
-		System.out.println("saveAction fired!!!");
+		editActionBean.saveAction(actionRequest, actionResponse);
 		
-		try {
-			
-			String showParams = actionRequest.getParameter(Edit${portletName}ModelBean.PREFS_SHOW_PARAMS);
-			String param1 = actionRequest.getParameter(Edit${portletName}ModelBean.PREFS_PARAM1);
-			String param2 = actionRequest.getParameter(Edit${portletName}ModelBean.PREFS_PARAM2);
-			String param3 = actionRequest.getParameter(Edit${portletName}ModelBean.PREFS_PARAM3);
-			
-			actionRequest.getPreferences().setValue(Edit${portletName}ModelBean.PREFS_SHOW_PARAMS, 
-				showParams);
-			actionRequest.getPreferences().setValue(Edit${portletName}ModelBean.PREFS_PARAM1, 
-					param1);
-			actionRequest.getPreferences().setValue(Edit${portletName}ModelBean.PREFS_PARAM2, 
-					param2);
-			actionRequest.getPreferences().setValue(Edit${portletName}ModelBean.PREFS_PARAM3, 
-					param3);
-			actionRequest.getPreferences().store();
-			
-			editModelBean.setShowParams(Boolean.valueOf(showParams));
-			editModelBean.setParam1(param1);
-			editModelBean.setParam2(param2);
-			editModelBean.setParam3(param3);
-			
-			actionRequest.setAttribute(EDIT_MODEL_BEAN_ATTR_KEY, editModelBean);
-			
-			actionRequest.setAttribute(INFO_MESSAGE_ATTR_KEY, "edit.save.msg.success");
-			
-		} catch (Exception ex) {
-			actionRequest.setAttribute(ERROR_MESSAGE_ATTR_KEY, "edit.save.msg.fail");
-			ex.printStackTrace();
-		}
 	}
 	
+	@Override
 	public void resetAction(ActionRequest actionRequest, ActionResponse actionResponse) {
 		
-		System.out.println("resetAction fired!!!");
-		
-		try {
-			
-			actionRequest.getPreferences().reset(Edit${portletName}ModelBean.PREFS_SHOW_PARAMS);
-			actionRequest.getPreferences().reset(Edit${portletName}ModelBean.PREFS_PARAM1);
-			actionRequest.getPreferences().reset(Edit${portletName}ModelBean.PREFS_PARAM2);
-			actionRequest.getPreferences().reset(Edit${portletName}ModelBean.PREFS_PARAM3);
-			
-			editModelBean = new Edit${portletName}ModelBean(actionRequest);
-			
-			actionRequest.setAttribute(EDIT_MODEL_BEAN_ATTR_KEY, editModelBean);
-			
-		} catch (Exception ex) {
-			actionRequest.setAttribute(ERROR_MESSAGE_ATTR_KEY, "edit.reset.msg.fail");
-			ex.printStackTrace();
-		}
+		editActionBean.resetAction(actionRequest, actionResponse);
 		
 	}
+	// Edit Action - end
+	///////////////////////////////////////////////////////////////////////////
+	
 }

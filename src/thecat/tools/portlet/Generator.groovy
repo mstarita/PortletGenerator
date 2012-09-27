@@ -86,7 +86,10 @@ def files4config =
 									 files: ['Language_it_IT.properties', 'Language_en_US.properties']],
 						  'src':    [inputDir: 'tpl/src', outputDir: "src/${binding.packageName.replaceAll('[.]', '/')}", postfix: '.tpl',
 									 files: ['${portletName}Portlet.java',
-											 'Edit${portletName}ModelBean.java']],
+											 'Edit${portletName}ModelBean.java', 'View${portletName}ModelBean.java',
+											 'Edit${portletName}ActionBean.java', 'View${portletName}ActionBean.java',
+											 'Edit${portletName}ActionBeanImpl.java', 'View${portletName}ActionBeanImpl.java'
+											 ]],
 						  'jsp':    [inputDir: 'tpl/jsp', outputDir: "web/${binding.portletName}", postfix: '.tpl',
 						             files: ['init.jsp', 'edit.jsp', 'view.jsp']],
 						  'css':    [inputDir: 'css', outputDir: 'web/css', postfix: '',
