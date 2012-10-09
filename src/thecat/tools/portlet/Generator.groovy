@@ -100,7 +100,29 @@ def files4config =
 									  files: ['c.tld', 'liferay-aui.tld', 'liferay-portlet.tld', 'liferay-security.tld', 
 										  		'liferay-theme.tld', 'liferay-ui.tld', 'liferay-util.tld']],
 						  'projlib':[inputDir: 'projlib', outputDir: 'projlib', postfix: '',
-									  files: ['portal-service.jar', 'portlet.jar', 'servlet-api.jar', 'util-bridges.jar', 'util-taglib.jar']]]
+									  files: ['portal-service.jar', 'portlet.jar', 'servlet-api.jar', 'util-bridges.jar', 'util-taglib.jar']]],
+			'zk6' :
+								  ['webcfg': [inputDir: 'tpl/webcfg', outputDir: 'web/WEB-INF', postfix: '.tpl',
+											  files: ['zk.xml', 'web.xml', 'portlet.xml',
+													  'liferay-portlet.xml', 'liferay-plugin-package.properties', 'liferay-display.xml']],
+								   'i18n':   [inputDir: 'tpl/i18n', outputDir: 'src/resources', postfix: '.tpl',
+											  files: ['Language_it_IT.properties', 'Language_en_US.properties']],
+								   'src':    [inputDir: 'tpl/src', outputDir: "src/${binding.packageName.replaceAll('[.]', '/')}", postfix: '.tpl',
+											  files: ['Edit${portletName}Model.java', 'View${portletName}Model.java',
+													  'Edit${portletName}ViewModel.java', 'View${portletName}ViewModel.java'
+													  ]],
+								   'zkviewutil':[inputDir: 'tpl/viewutil', outputDir: "src/${binding.viewUtilPackage.replaceAll('[.]', '/')}/zk", postfix: '.tpl',
+									   		   files: ['LabelsUtil.java']],
+								   'zkportlet':[inputDir: 'tpl/viewutil', outputDir: "src/org/zkoss/zk/ui/http", postfix: '.tpl',
+									   		   files: ['FullDHtmlLayoutPortlet.java']],
+								   'zul':    [inputDir: 'tpl/zul', outputDir: "web/${binding.portletName}", postfix: '.tpl',
+											  files: ['view.zul', 'edit.zul']],
+								   'css':    [inputDir: 'css', outputDir: 'web/css', postfix: '',
+											  files: ['form.css']],
+								   'lib':    [inputDir: 'lib', outputDir: 'web/lib', postfix: '',
+											   files: []],
+								   'projlib':[inputDir: 'projlib', outputDir: 'projlib', postfix: '',
+											   files: ['portal-service.jar', 'portlet.jar', 'servlet-api.jar']]]
 			]
 
 showRunInfo outputPackage, viewUtilPackage, tplConfigDir
@@ -221,5 +243,5 @@ def showUsage() {
 	println "\t[-viewutil-package=<package of the view util classes>] - default: thecat.common.view.util"
 	println "\t[-verbose] verbose output"
 	println "\t[-tpl-config=<template config dir starting from thecat.tools.portlet.resources.tpl.*...] template configuration - default: icefaces1_8"
-	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin, richfaces4, liferay_jsp"
+	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin, richfaces4, liferay_jsp, zk6"
 }

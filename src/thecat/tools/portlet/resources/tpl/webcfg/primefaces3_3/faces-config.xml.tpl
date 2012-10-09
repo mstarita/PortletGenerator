@@ -13,7 +13,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>facesUtil</managed-bean-name>
-		<managed-bean-class>thecat.common.view.util.FacesUtil</managed-bean-class>
+		<managed-bean-class>${viewUtilPackage}.FacesUtil</managed-bean-class>
 		<managed-bean-scope>none</managed-bean-scope>
 	</managed-bean>
 	
