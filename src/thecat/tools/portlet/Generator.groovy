@@ -111,8 +111,6 @@ def files4config =
 											  files: ['Edit${portletName}Model.java', 'View${portletName}Model.java',
 													  'Edit${portletName}ViewModel.java', 'View${portletName}ViewModel.java'
 													  ]],
-								   'zkviewutil':[inputDir: 'tpl/viewutil', outputDir: "src/${binding.viewUtilPackage.replaceAll('[.]', '/')}/zk", postfix: '.tpl',
-									   		   files: ['LabelsUtil.java']],
 								   'zkportlet':[inputDir: 'tpl/viewutil', outputDir: "src/org/zkoss/zk/ui/http", postfix: '.tpl',
 									   		   files: ['FullDHtmlLayoutPortlet.java']],
 								   'zul':    [inputDir: 'tpl/zul', outputDir: "web/${binding.portletName}", postfix: '.tpl',

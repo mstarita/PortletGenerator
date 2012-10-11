@@ -1,5 +1,7 @@
 package ${packageName};
 
+import java.util.Locale;
+
 import javax.portlet.PortletPreferences;
 
 import org.zkoss.bind.annotation.Command;
@@ -7,11 +9,10 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.resource.impl.LabelLoader;
 import org.zkoss.zk.ui.Desktop;
-import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.http.FullDHtmlLayoutPortlet;
-
-import ${viewUtilPackage}.zk.LabelsUtil;
 
 import com.liferay.portal.kernel.util.Validator;
 
@@ -21,11 +22,19 @@ public class Edit${portletName}ViewModel {
 
 	private Edit${portletName}Model editModel;
 	
+	private PortletPreferences portletPrefs;
+	private LabelLoader labelLoader;
+	private Locale locale;
+	
 	@Init
-	public void init(@ContextParam(ContextType.SESSION) Session session, @ContextParam(ContextType.DESKTOP) Desktop desktop) {
+	public void init(@ContextParam(ContextType.DESKTOP) Desktop desktop) {
+		
+		portletPrefs = 
+			(PortletPreferences) Executions.getCurrent().getAttribute(FullDHtmlLayoutPortlet.PORTLET_PREFS_ATTR_KEY);
+		labelLoader = (LabelLoader) Executions.getCurrent().getAttribute(FullDHtmlLayoutPortlet.LABEL_LOADER_ATTR_KEY);
+		locale = (Locale) Executions.getCurrent().getAttribute(FullDHtmlLayoutPortlet.LOCALE_ATTR_KEY);
 		
 		if (Validator.isNull(desktop.getAttribute(Edit${portletName}Model.EDIT_MODEL_KEY_ATTR))) {
-			PortletPreferences portletPrefs = (PortletPreferences) session.getAttribute(FullDHtmlLayoutPortlet.PORTLET_PREFS_ATTR_KEY);
 			editModel = new Edit${portletName}Model(portletPrefs);
 			desktop.setAttribute(Edit${portletName}Model.EDIT_MODEL_KEY_ATTR, editModel);
 		} else {
@@ -40,11 +49,9 @@ public class Edit${portletName}ViewModel {
 
 	@Command
 	@NotifyChange("editModel")
-	public void actionReset(@ContextParam(ContextType.SESSION) Session session) {
+	public void actionReset() {
 		
 		System.out.println("actionReset invoked!!!");
-		
-		PortletPreferences portletPrefs = (PortletPreferences) session.getAttribute(FullDHtmlLayoutPortlet.PORTLET_PREFS_ATTR_KEY);
 		
 		try {
 			
@@ -60,7 +67,7 @@ public class Edit${portletName}ViewModel {
 			
 		} catch (Exception ex) {
 			
-			editModel.setErrorMessage(LabelsUtil.getLabel("edit.reset.msg.fail"));
+			editModel.setErrorMessage(labelLoader.getLabel(locale, "edit.reset.msg.fail"));
 			editModel.setInfoMessage(null);
 			
 			ex.printStackTrace();
@@ -71,11 +78,9 @@ public class Edit${portletName}ViewModel {
 	
 	@Command
 	@NotifyChange("editModel")
-	public void actionSave(@ContextParam(ContextType.SESSION) Session session) {
+	public void actionSave() {
 		
 		System.out.println("actionSave invoked!!!");
-		
-		PortletPreferences portletPrefs = (PortletPreferences) session.getAttribute(FullDHtmlLayoutPortlet.PORTLET_PREFS_ATTR_KEY);
 		
 		try {
 			portletPrefs.setValue(Edit${portletName}Model.PREFS_SHOW_PARAMS, editModel.getShowParams().toString());
@@ -85,12 +90,12 @@ public class Edit${portletName}ViewModel {
 			
 			portletPrefs.store();
 			
-			editModel.setInfoMessage(LabelsUtil.getLabel("edit.save.msg.success"));
+			editModel.setInfoMessage(labelLoader.getLabel(locale, "edit.save.msg.success"));
 			editModel.setErrorMessage(null);
 			
 		} catch (Exception ex) {
 			
-			editModel.setErrorMessage(LabelsUtil.getLabel("edit.save.msg.fail"));
+			editModel.setErrorMessage(labelLoader.getLabel(locale, "edit.save.msg.fail"));
 			editModel.setInfoMessage(null);
 			
 			ex.printStackTrace();

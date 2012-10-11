@@ -153,10 +153,10 @@ public class FullDHtmlLayoutPortlet extends GenericPortlet {
 		SessionsCtrl.setCurrent(sess);
 		try {
 			// setup portlet prefs
-			sess.setAttribute(PORTLET_PREFS_ATTR_KEY, request.getPreferences());
-			
+			request.setAttribute(PORTLET_PREFS_ATTR_KEY, request.getPreferences());
+
 			// setup locale
-			sess.setAttribute(LOCALE_ATTR_KEY, request.getLocale());
+			request.setAttribute(LOCALE_ATTR_KEY, request.getLocale());
 			
 			// Bug ZK-1179: process I18N in portlet environment
 			HttpServletRequest httpreq = RenderHttpServletRequest.getInstance(request);
@@ -165,7 +165,7 @@ public class FullDHtmlLayoutPortlet extends GenericPortlet {
 					sess.getWebApp().getConfiguration().getResponseCharset());
 			
 			// setup LabelLoader
-			setupLabelLoader(httpreq, sess);
+			setupLabelLoader(httpreq, request);
 			
 			try {
 				if (!process(sess, request, response, path, bRichlet))
@@ -217,10 +217,10 @@ public class FullDHtmlLayoutPortlet extends GenericPortlet {
 		SessionsCtrl.setCurrent(sess);
 		try {
 			// setup portlet prefs
-			sess.setAttribute(PORTLET_PREFS_ATTR_KEY, request.getPreferences());
-			
+			request.setAttribute(PORTLET_PREFS_ATTR_KEY, request.getPreferences());
+
 			// setup locale
-			sess.setAttribute(LOCALE_ATTR_KEY, request.getLocale());
+			request.setAttribute(LOCALE_ATTR_KEY, request.getLocale());
 			
 			// Bug ZK-1179: process I18N in portlet environment
 			HttpServletRequest httpreq = RenderHttpServletRequest.getInstance(request);
@@ -229,7 +229,7 @@ public class FullDHtmlLayoutPortlet extends GenericPortlet {
 					sess.getWebApp().getConfiguration().getResponseCharset());
 			
 			// setup LabelLoader
-			setupLabelLoader(httpreq, sess);
+			setupLabelLoader(httpreq, request);
 			
 			try {
 				if (!process(sess, request, response, path, bRichlet))
@@ -433,13 +433,11 @@ public class FullDHtmlLayoutPortlet extends GenericPortlet {
 			//protlet request will mangle attribute name)
 	}
 	
-	private void setupLabelLoader(HttpServletRequest httpreq, Session sess) {
-		if (sess.getAttribute(LABEL_LOADER_ATTR_KEY) == null) {
-			LabelLoader labelLoader = new LabelLoader();
-			labelLoader.register(new ServletLabelLocator(httpreq.getSession().getServletContext(), 
-					"/WEB-INF/classes/resources/Language.properties"));
-			labelLoader.setVariableResolver(new ServletRequestResolver());
-			sess.setAttribute(LABEL_LOADER_ATTR_KEY, labelLoader);
-		}
+	private void setupLabelLoader(HttpServletRequest httpreq, RenderRequest request) {
+		LabelLoader labelLoader = new LabelLoader();
+		labelLoader.register(new ServletLabelLocator(httpreq.getSession().getServletContext(), 
+				"/WEB-INF/classes/resources/Language.properties"));
+		labelLoader.setVariableResolver(new ServletRequestResolver());
+		request.setAttribute(LABEL_LOADER_ATTR_KEY, labelLoader);
 	}
 }
