@@ -14,8 +14,6 @@ import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.http.FullDHtmlLayoutPortlet;
 
-import com.liferay.portal.kernel.util.Validator;
-
 public class Edit${portletName}ViewModel {
 
 	private static final long serialVersionUID = 1L;
@@ -34,12 +32,7 @@ public class Edit${portletName}ViewModel {
 		labelLoader = (LabelLoader) Executions.getCurrent().getAttribute(FullDHtmlLayoutPortlet.LABEL_LOADER_ATTR_KEY);
 		locale = (Locale) Executions.getCurrent().getAttribute(FullDHtmlLayoutPortlet.LOCALE_ATTR_KEY);
 		
-		if (Validator.isNull(desktop.getAttribute(Edit${portletName}Model.EDIT_MODEL_KEY_ATTR))) {
-			editModel = new Edit${portletName}Model(portletPrefs);
-			desktop.setAttribute(Edit${portletName}Model.EDIT_MODEL_KEY_ATTR, editModel);
-		} else {
-			editModel = (Edit${portletName}Model) desktop.getAttribute(Edit${portletName}Model.EDIT_MODEL_KEY_ATTR);
-		}
+		editModel = new Edit${portletName}Model(portletPrefs);
 		
 	}
 	
