@@ -120,7 +120,34 @@ def files4config =
 								   'lib':    [inputDir: 'lib', outputDir: 'web/lib', postfix: '',
 											   files: []],
 								   'projlib':[inputDir: 'projlib', outputDir: 'projlib', postfix: '',
-											   files: ['portal-service.jar', 'portlet.jar', 'servlet-api.jar']]]
+											   files: ['portal-service.jar', 'portlet.jar', 'servlet-api.jar']]],
+			'flex4_6' :
+								   ['webcfg': [inputDir: 'tpl/webcfg', outputDir: 'web/WEB-INF', postfix: '.tpl',
+											   files: ['web.xml', 'portlet.xml',
+													   'liferay-portlet.xml', 'liferay-display.xml']],
+									'flex': [inputDir: 'tpl/flex', outputDir: 'web/WEB-INF/flex', postfix: '.tpl',
+											   files: ['services-config.xml']],
+									'granite': [inputDir: 'tpl/flex', outputDir: 'web/WEB-INF/granite', postfix: '.tpl',
+											   files: ['granite-config.xml']],
+									'i18n_it':   [inputDir: 'tpl/i18n/it', outputDir: 'locale/it_IT', postfix: '.tpl',
+											   files: ['Language.properties']],
+									'i18n_en':   [inputDir: 'tpl/i18n/en', outputDir: 'locale/en_US', postfix: '.tpl',
+											   files: ['Language.properties']],
+									'src':    [inputDir: 'tpl/src', outputDir: "src/${binding.packageName.replaceAll('[.]', '/')}", postfix: '.tpl',
+											   files: ['Edit${portletName}ModelBean.java', 'View${portletName}Service.java', '${portletName}Portlet.java', 
+												   		'Edit${portletName}Model.as']],
+									'font':	[inputDir: 'fonts', outputDir: "resources", postfix: '',
+												   files: ['Ubuntu-L.ttf']],
+									'jsp':    [inputDir: 'tpl/jsp', outputDir: "web/${binding.portletName}", postfix: '.tpl',
+											   files: ['view.jsp', 'edit.jsp']],
+									'mxml':    [inputDir: 'tpl/mxml', outputDir: "web/${binding.portletName}", postfix: '.tpl',
+											   files: ['view.mxml', 'edit.mxml']],
+									'build':  [inputDir: 'tpl/build', outputDir: ".", postfix: '.tpl',
+											   files: ['build.xml', 'env.properties']],
+									'lib':    [inputDir: 'lib', outputDir: 'web/lib', postfix: '',
+												files: []],
+									'projlib':[inputDir: 'projlib', outputDir: 'projlib', postfix: '',
+												files: ['portal-service.jar', 'portlet.jar', 'servlet-api.jar', 'util-bridges.jar']]]
 			]
 
 showRunInfo outputPackage, viewUtilPackage, tplConfigDir
@@ -241,5 +268,5 @@ def showUsage() {
 	println "\t[-viewutil-package=<package of the view util classes>] - default: thecat.common.view.util"
 	println "\t[-verbose] verbose output"
 	println "\t[-tpl-config=<template config dir starting from thecat.tools.portlet.resources.tpl.*...] template configuration - default: icefaces1_8"
-	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin, richfaces4, liferay_jsp, zk6"
+	println "\tAvailable template configuration: icefaces1_8, icefaces3_1, mojarra2, primefaces3_3, moj2tomahawk2, moj2alloy, vaadin, richfaces4, liferay_jsp, zk6, flex4_6"
 }
